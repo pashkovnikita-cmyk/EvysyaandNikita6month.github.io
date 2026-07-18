@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наша галерея — Все фото вместе</title>
+    <style>
+        .ending-image{
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.ending-image img{
+    width: 500px;
+    max-width: 90%;
+    height: auto;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
+}
+
+@keyframes float{
+    0%,100%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-12px);
+    }
+}
+        .gallery-item{
+    position: relative;
+    overflow: hidden;
+}
+
+
+.image-wrapper{
+    position: relative;
+    overflow: hidden;
+}
+
+/* Стич в левом верхнем углу */
+.stitch-corner{
+    width:150px !important;
+    height:auto !important;
+
+    position:absolute;
+    top:-30px;
+    left:-40px;
+
+    object-fit:contain !important;
+    z-index:20;
+
+}
+
+/* Небольшое увеличение при наведении */
+.gallery-item:hover .stitch-corner{
+    transform: scale(2.08);
+}
+
+
+
+        
+
+        .reasons{
+    margin-top:30px;
+}
+
+.reasons h2{
+    text-align:center;
+    font-size:2.5rem;
+    margin-bottom:35px;
+    color:#fff;
+    text-shadow:0 0 15px var(--stitch-light);
+}
+
+.reasons-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:18px;
+}
+
+.reason{
+    background:var(--card-bg);
+    border:2px solid rgba(124,181,236,.2);
+    border-radius:18px;
+    padding:18px;
+    transition:.3s;
+    font-size:1.05rem;
+}
+
+.reason:hover{
+    transform:translateY(-5px);
+    border-color:var(--stitch-ear);
+    box-shadow:0 0 18px rgba(255,101,132,.35);
+}
+        :root {
+            --stitch-blue: #1b4d8f;
+            --stitch-light: #7cb5ec;
+            --stitch-ear: #ff6584;
+            --bg-dark: #0b1d3a;
+            --card-bg: #162d54;
+            --text-light: #e2f1ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comfortaa', 'Segoe UI', cursive, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                              radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+            background-size: 550px 550px, 350px 350px;
+            background-position: 0 0, 40px 60px;
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px var(--stitch-light);
+            margin-bottom: 25px;
+        }
+
+        /* Кнопка возврата */
+        .back-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: transparent;
+            color: var(--stitch-light);
+            border: 2px solid var(--stitch-light);
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: var(--stitch-light);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--stitch-light);
+            transform: translateY(-2px);
+        }
+
+        /* Сетка галереи */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+
+        .gallery-item {
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--stitch-ear);
+            box-shadow: 0 0 30px rgba(255, 101, 132, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .image-wrapper {
+            width: 100%;
+            height: 500px; /* Крупный размер для фотографий в альбоме */
+            overflow: hidden;
+            background-color: #081224;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .item-desc {
+            padding: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            background: rgba(11, 29, 58, 0.4);
+            border-top: 1px solid rgba(124, 181, 236, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--stitch-light);
+            opacity: 0.6;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .image-wrapper { height: 380px; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Альбом наших воспоминаний и не только😘</h1>
+            <a href="index.html" class="back-btn">← Вернуться назад</a>
+        </header>
+
+        <div class="gallery-grid">
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="photo_2026-07-10_23-35-18.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Самый первый месяц ✨</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="photo_2026-07-10_23-39-45.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Улыбки и тепло 😊</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="photo_2026-07-11_00-09-22.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Красивый момент вместе ❤️</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="photo_2026-07-11_00-10-47.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Твоя забота и радость 🌟</div>
+            </div>
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="photo_2026-07-11_00-13-50.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Самые тёплые объятия 🫂</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="photo_2026-07-11_00-15-04.jpg " alt="Наше фото">
+                </div>
+                <div class="item-desc">Моё самое любимое мгновение ✨</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="19.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Рядом с тобой время замирает 🤍</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="12.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Счастье в простых мелочах..</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="7.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Моя главная поддержка и вдохновение</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="5.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Там, где всегда тепло и спокойно</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="16.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Когда одного взгляда достаточно 🥰</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="14.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Наш маленький уютный мир ☕</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="13.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Лучшие вечера — это вечера с тобой</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="18.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Коллекционируем общие моменты 🗺️</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="10.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Счастливые дни вместе 🌸</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="9.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Ещё одна счастливая страничка нашей истории</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="8.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Покоряем этот мир вместе 🏔️</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="17.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Вместе в любое приключение!</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="6.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Моя бесконечная любовь 💞</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="15.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Улыбаюсь, когда ты рядом</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="4.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Самый дорогой человек на Земле 🌍</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="3.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Кусочек нашего счастья</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="2.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Самое уютное место на свете — твои объятия</div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="stitch-love.png" class="stitch-corner" alt="">
+                    <img src="1.jpg" alt="Наше фото">
+                </div>
+                <div class="item-desc">Полгода любви 💕</div>
+            </div>
+
+        </div>
+
+        
+    </div>
+
+    <section class="reasons">
+    <h2>💙 104 причины, почему ты самая лучшая 💙</h2>
+
+    <div class="reasons-grid">
+        <div class="reason">1. Потому что твоя улыбка делает мой день лучше.</div>
+        <div class="reason">2. Ты всегда умеешь поддержать.</div>
+        <div class="reason">3. С тобой спокойно.</div>
+        <div class="reason">4. Ты невероятно красивая.</div>
+        <div class="reason">5. У тебя доброе сердце.</div>
+        <div class="reason">6. Ты заботливая.</div>
+        <div class="reason">7. Ты искренняя.</div>
+        <div class="reason">8. Ты смешно смеёшься.</div>
+        <div class="reason">9. Мне нравится проводить с тобой время.</div>
+        <div class="reason">10. Ты делаешь обычные дни особенными.</div>
+
+        <div class="reason">11. Ты вдохновляешь меня.</div>
+        <div class="reason">12. Ты умеешь слушать.</div>
+        <div class="reason">13. Ты всегда остаёшься собой.</div>
+        <div class="reason">14. У тебя красивые глаза.</div>
+        <div class="reason">15. Ты очень милая.</div>
+        <div class="reason">16. Ты умеешь удивлять.</div>
+        <div class="reason">17. Ты смешная.</div>
+        <div class="reason">18. Ты заботишься обо мне.</div>
+        <div class="reason">19. Мне нравится твой голос.</div>
+        <div class="reason">20. Ты делаешь меня счастливым.</div>
+
+        <div class="reason">21. Ты умеешь поднять настроение.</div>
+        <div class="reason">22. Ты самая нежная.</div>
+        <div class="reason">23. Ты самая добрая.</div>
+        <div class="reason">24. Ты невероятно умная.</div>
+        <div class="reason">25. Ты красива даже без макияжа.</div>
+        <div class="reason">26. Ты очень сильная.</div>
+        <div class="reason">27. Мне нравится смотреть на тебя.</div>
+        <div class="reason">28. Ты заставляешь меня улыбаться.</div>
+        <div class="reason">29. Ты делаешь мир ярче.</div>
+        <div class="reason">30. Ты всегда остаёшься особенной.</div>
+
+        <div class="reason">31. Ты умеешь мечтать.</div>
+        <div class="reason">32. Ты настоящая.</div>
+        <div class="reason">33. Мне нравится твоя доброта.</div>
+        <div class="reason">34. Ты умеешь прощать.</div>
+        <div class="reason">35. Ты вдохновляешь быть лучше.</div>
+        <div class="reason">36. Ты прекрасна.</div>
+        <div class="reason">37. Ты моя радость.</div>
+        <div class="reason">38. Ты очень ласковая.</div>
+        <div class="reason">39. Ты умеешь заботиться.</div>
+        <div class="reason">40. Ты уникальная.</div>
+
+        <div class="reason">41. Ты самая любимая.</div>
+        <div class="reason">42. Ты приносишь уют.</div>
+        <div class="reason">43. Ты всегда рядом.</div>
+        <div class="reason">44. Ты искренне радуешься.</div>
+        <div class="reason">45. Ты невероятная.</div>
+        <div class="reason">46. Ты мой лучший человек.</div>
+        <div class="reason">47. Ты понимаешь меня.</div>
+        <div class="reason">48. Ты очень нежная.</div>
+        <div class="reason">49. Ты всегда прекрасна.</div>
+        <div class="reason">50. Ты — моё счастье.</div>
+
+        <div class="reason">51. Ты умеешь мечтать вместе со мной.</div>
+        <div class="reason">52. Ты даришь тепло.</div>
+        <div class="reason">53. Ты делаешь меня сильнее.</div>
+        <div class="reason">54. Ты самая милая.</div>
+        <div class="reason">55. Ты всегда особенная.</div>
+        <div class="reason">56. Ты делаешь жизнь интереснее.</div>
+        <div class="reason">57. Ты умеешь любить.</div>
+        <div class="reason">58. Ты всегда вдохновляешь.</div>
+        <div class="reason">59. Ты прекрасна внутри и снаружи.</div>
+        <div class="reason">60. Ты моя любимая улыбка.</div>
+
+        <div class="reason">61. Ты украшаешь каждый день.</div>
+        <div class="reason">62. Ты умеешь поддержать словом.</div>
+        <div class="reason">63. Ты самая добрая душа.</div>
+        <div class="reason">64. Ты невероятно милая.</div>
+        <div class="reason">65. Ты умеешь удивлять меня.</div>
+        <div class="reason">66. Ты заставляешь верить в лучшее.</div>
+        <div class="reason">67. Ты приносишь счастье.</div>
+        <div class="reason">68. Ты всегда прекрасна.</div>
+        <div class="reason">69. Ты даришь спокойствие.</div>
+        <div class="reason">70. Ты делаешь меня лучше.</div>
+
+        <div class="reason">71. Мне нравится твоё чувство юмора.</div>
+        <div class="reason">72. Ты умеешь быть сильной.</div>
+        <div class="reason">73. Ты самая красивая для меня.</div>
+        <div class="reason">74. Ты моя поддержка.</div>
+        <div class="reason">75. Ты умеешь вдохновлять.</div>
+        <div class="reason">76. Ты невероятно добрая.</div>
+        <div class="reason">77. Ты заставляешь сердце биться чаще.</div>
+        <div class="reason">78. Ты умеешь мечтать.</div>
+        <div class="reason">79. Ты самая лучшая.</div>
+        <div class="reason">80. Ты всегда рядом в мыслях.</div>
+
+        <div class="reason">81. Ты умеешь сделать любой день счастливым.</div>
+        <div class="reason">82. Ты невероятно нежная.</div>
+        <div class="reason">83. Ты самая родная.</div>
+        <div class="reason">84. Ты делаешь мою жизнь ярче.</div>
+        <div class="reason">85. Ты всегда вдохновляешь улыбаться.</div>
+        <div class="reason">86. Ты мой любимый человек.</div>
+        <div class="reason">87. Ты самая красивая девушка.</div>
+        <div class="reason">88. Ты делаешь меня счастливым каждый день.</div>
+        <div class="reason">89. Ты всегда в моём сердце.</div>
+        <div class="reason">90. Ты самая лучшая подруга и любовь.</div>
+
+        <div class="reason">91. Ты делаешь мир добрее.</div>
+        <div class="reason">92. Ты самая милая на свете.</div>
+        <div class="reason">93. Ты умеешь радовать.</div>
+        <div class="reason">94. Ты — мой человек.</div>
+        <div class="reason">95. Ты вдохновляешь любить жизнь.</div>
+        <div class="reason">96. Ты даришь самые счастливые моменты.</div>
+        <div class="reason">97. Ты — моё самое любимое чудо.</div>
+        <div class="reason">98. Потому что именно ты — это ты.</div>
+        <div class="reason">99. Потому что с тобой хочется прожить всю жизнь.</div>
+        <div class="reason">100. Потому что я люблю тебя больше с каждым днём. ❤️</div>
+        <div class="reason">101. Потому что рядом с тобой я чувствую себя по-настоящему счастливым. 💙</div>
+
+<div class="reason">102. Потому что каждое воспоминание с тобой становится самым дорогим для меня. ✨</div>
+
+<div class="reason">103. Потому что именно ты — моя самая большая удача в жизни. 🍀</div>
+
+<div class="reason">
+    104. Потому что я каждый день выбирал бы только тебя. ❤️<br><br>
+    И знаешь… это только 104 причины, которые получилось написать словами. На самом деле их намного больше — настолько много, что не хватит ни одной страницы, ни одного сайта, чтобы перечислить их все. Каждый день рядом с тобой дарит мне новые причины любить тебя ещё сильнее. Спасибо, что ты есть в моей жизни. Я люблю тебя бесконечно. ❤️∞
+</div>
+    </div>
+</section>
+
+        <div class="reasons-grid">
+            
+            <div class="reason"><h1>💙 Солнышко...</h1>
+
+Солнышко, я так рад, что однажды встретил именно тебя. Честно, я даже не представлял, что один человек может настолько изменить мою жизнь. С того самого момента всё стало каким-то другим — ярче, теплее и счастливее.
+
+Спасибо тебе за каждую улыбку, за каждое сообщение, за каждую минуту, проведённую вместе. Даже самые обычные моменты рядом с тобой становятся для меня особенными. Мне не нужны дорогие подарки или идеальные места, потому что самое главное счастье для меня — это просто быть рядом с тобой.
+
+Ты стала человеком, который заставляет меня улыбаться даже в самые трудные дни. Когда мне грустно, я думаю о тебе, и становится легче. Когда происходит что-то хорошее, первым делом хочется поделиться этим именно с тобой.
+
+Мне нравится в тебе абсолютно всё: твоя улыбка, твои красивые глаза, твой голос, твой смех, твоя доброта, забота и даже маленькие привычки, которые делают тебя именно тобой. Для меня ты самая красивая, самая добрая, самая милая и самая лучшая девушка на свете.
+
+За эти полгода мы создали столько воспоминаний, которые я буду хранить в своём сердце ещё очень долго. Каждая фотография на этом сайте напоминает мне, насколько счастливым ты меня делаешь. И я надеюсь, что впереди нас ждёт ещё намного больше таких моментов.
+
+Спасибо тебе за то, что доверяешь мне, поддерживаешь меня и просто остаёшься рядом. Спасибо за все объятия, за смех до слёз, за наши прогулки, разговоры и даже за моменты молчания, потому что рядом с тобой комфортно всегда.
+
+Я хочу, чтобы ты всегда помнила одну простую вещь: для меня ты — самый дорогой человек. И что бы ни происходило, я всегда буду стараться делать тебя счастливой, поддерживать тебя и быть рядом.
+
+Я очень ценю всё, что у нас есть, и каждый день благодарен судьбе за то, что она подарила мне встречу с тобой. Если бы мне снова пришлось прожить этот путь, я бы снова выбрал только тебя.
+
+Я люблю тебя не за что-то конкретное, а просто потому, что ты — это ты. Именно такой, какой ты есть.
+
+Спасибо тебе за эти прекрасные полгода. ❤️
+
+И знай… это только начало нашей истории. Впереди нас ждёт ещё очень много счастливых дней, красивых закатов, тёплых объятий, совместных фотографий и воспоминаний, которые мы будем создавать вместе. Я очень хочу, чтобы однажды, спустя много лет, мы открыли этот сайт, улыбнулись и сказали друг другу: «Помнишь, с чего всё начиналось?» ❤️
+
+Я бесконечно люблю тебя. Спасибо, что ты есть в моей жизни. Ты — моё счастье, моё солнышко и мой самый любимый человек. ❤️∞</div>
+        </div>
+        
+        <div class="ending-image">
+    <img src="st6.png" alt="Stitch и Angel">
+</div>
+<footer>
+            <p>© 2026 Наша история. Все воспоминания в одном месте.</p>
+        </footer>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+   
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=5.0,
+      minimum-scale=1.0,
+      user-scalable=yes">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Наша история — 6 месяцев вместе</title>
+    <style>
+        
+        
+  
+
+     
+
+        img {
+  max-width: 100%; /* Картинка не станет шире своего контейнера или экрана */
+  height: auto;    /* Пропорции фотографии не исказятся */
+  display: block;  /* Убирает лишние отступы снизу у картинок */
+}
+
+        .image-wrapper{
+    width:100%;
+    height:500px;
+    position:relative;
+    overflow:visible;
+    background:#081224;
+
+}
+
+.stitch-corner{
+    position:absolute;
+    top:-60px;
+    left:-70px;
+    width:300px;
+    z-index:999;
+    pointer-events:none;
+    transition:.3s;
+    filter:drop-shadow(0 10px 15px rgba(0,0,0,.35));
+}
+
+.gallery-item:hover .stitch-corner{
+    transform:scale(1.08) rotate(-6deg);
+}
+        :root {
+            --stitch-blue: #1b4d8f;      /* Глубокий синий */
+            --stitch-light: #7cb5ec;     /* Нежно-голубой */
+            --stitch-ear: #ff6584;       /* Розовый акцент */
+            --bg-dark: #0b1d3a;          /* Космический фон */
+            --card-bg: #162d54;          /* Фон для карточек */
+            --text-light: #e2f1ff;       /* Светлый текст */
+            --text-muted: #cbdcf0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Comfortaa', 'Segoe UI', cursive, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                              radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px);
+            background-size: 550px 550px, 350px 350px;
+            background-position: 0 0, 40px 60px;
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ГЛАВНЫЙ ЭКРАН (INTRO SCREEN) */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px);
+            background-size: 550px 550px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.1, 0.8, 0.2, 1), opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        .intro-zoom-container {
+            transform: scale(1);
+            transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1.main-title {
+            font-size: 5.5rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px var(--stitch-light), 0 0 40px var(--stitch-blue);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .main-subtitle {
+            font-size: 1.5rem;
+            color: var(--stitch-light);
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .intro-hint {
+            margin-top: 50px;
+            color: var(--stitch-ear);
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(255, 101, 132, 0.6);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ */
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            padding-top: 60px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .intro {
+            background: rgba(22, 45, 84, 0.6);
+            padding: 40px;
+            border-radius: 25px;
+            border: 2px solid var(--stitch-light);
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* КАРТОЧКИ ИСТОРИИ */
+        .history-card {
+            background: var(--card-bg);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .history-card:hover {
+            border-color: var(--stitch-ear);
+            box-shadow: 0 0 40px rgba(255, 101, 132, 0.4);
+        }
+
+        .card-status {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: var(--stitch-light);
+            color: var(--bg-dark);
+            padding: 6px 18px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .card-info {
+            padding: 40px;
+        }
+
+        .stage-number {
+            color: var(--stitch-ear);
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .stage-title {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .stage-description {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* МАКСИМАЛЬНОЕ ОКНО ДЛЯ КАРТИНКИ */
+        .zoom-window {
+            width: 100%;
+            height: 700px;
+            background-color: #081224;
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid rgba(124, 181, 236, 0.2);
+        }
+
+        .zoom-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--stitch-light);
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 1.3rem;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            text-shadow: 0 0 8px rgba(124, 181, 236, 0.6);
+            z-index: 2;
+            text-align: center;
+            width: 90%;
+        }
+
+        .zoom-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(3);
+            transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1), opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        /* ФИНАЛЬНЫЙ БЛОК */
+        .final-block {
+            background: linear-gradient(135deg, var(--stitch-blue), var(--card-bg));
+            border: 3px solid var(--stitch-ear);
+            padding: 80px 40px;
+            text-align: center;
+            border-radius: 30px;
+            margin-top: 80px;
+            box-shadow: 0 0 50px rgba(255, 101, 132, 0.3);
+        }
+
+        .final-block h2 {
+            font-size: 3rem;
+            color: #ffffff;
+            text-shadow: 0 0 15px var(--stitch-ear);
+            margin-bottom: 20px;
+        }
+
+        .final-block p {
+            color: #e2f1ff;
+            font-size: 1.3rem;
+            line-height: 1.8;
+        }
+
+        /* Стилизация кнопки перехода в галерею */
+        .gallery-btn {
+            display: inline-block;
+            margin-top: 35px;
+            padding: 15px 35px;
+            background-color: transparent;
+            color: var(--stitch-ear);
+            border: 2px solid var(--stitch-ear);
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-btn:hover {
+            background-color: var(--stitch-ear);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--stitch-ear);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 100px 20px;
+            color: var(--stitch-light);
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.5; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1.02); }
+        }
+
+        /* ПОЛНАЯ АДАПТАЦИЯ */
+        @media (max-width: 1440px) {
+            .container { max-width: 95%; }
+            .zoom-window { height: 600px; }
+        }
+
+        @media (max-width: 992px) {
+            .zoom-window { height: 450px; }
+        }
+
+        @media (max-width: 768px) {
+            h1.main-title { font-size: 2.8rem; }
+            .main-subtitle { font-size: 1rem; }
+            .stage-title { font-size: 1.6rem; }
+            .zoom-window { height: 350px; }
+            .card-info { padding: 25px; }
+            .card-status { position: static; display: inline-block; margin-bottom: 15px; }
+            .final-block h2 { font-size: 1.8rem; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <script>
+  // Настройки свайпа
+  let touchStartY = 0;
+  let touchEndY = 0;
+  const minSwipeDistance = 100; // Минимальная длина свайпа в пикселях, чтобы он сработал
+  const targetPage = "contacts.html"; // Укажите здесь адрес страницы, на которую нужно перейти
+
+  // Фиксируем координату, где палец коснулся экрана
+  window.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].screenY;
+  });
+
+  // Фиксируем координату, где палец оторвался от экрана
+  window.addEventListener('touchend', (e) => {
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+  });
+
+  // Функция обработки движения
+  function handleSwipe() {
+    // Если палец двигался сверху вниз и расстояние больше minSwipeDistance
+    if (touchEndY - touchStartY > minSwipeDistance) {
+      // Выполняем автоматический переход на новую страницу
+      window.location.href = targetPage;
+    }
+  }
+</script>
+
+    <div id="intro-screen">
+        <div class="intro-zoom-container" id="intro-container">
+            <h1 class="main-title">❤️НАША ИСТОРИЯ❤️ </h1>
+            <p class="main-subtitle">💕Полгода вместе • Самые яркие моменты • Наш виртуальный портал💕</p>
+            <div class="intro-hint">[ Покрути колесико НА СЕБЯ для начала ]</div>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <div class="container">
+            
+            <section class="intro">
+                <p>Прошло ровно полгода с того момента, как мы решили быть вместе. За это время произошло столько прекрасных событий, которые навсегда останутся в памяти. Ниже собраны главные этапы нашего пути. Наведи мышку на темные экраны блоков и покрути колесико на себя, чтобы увидеть моменты.</p>
+            </section>
+
+            <div class="timeline">
+
+                <div class="history-card">
+                    <span class="card-status">Пройдено</span>
+                    <div class="card-info">
+                        <div class="stage-number">Месяц 1</div>
+                        <h3 class="stage-title">Самое начало / Знакомство</h3>
+                        <p class="stage-description">Тот самый момент, когда всё только начиналось. Первое волнение, долгие разговоры допоздна и искренние улыбки, которые дали понять, что это начало чего-то особенного и очень важного.</p>
+                    </div>
+                    <div class="zoom-window">
+                        <div class="zoom-hint">[ Прокрути назад для отдаления ]</div>
+                        <img src="stitch-love.png" class="stitch-corner" alt="">
+                        <img class="zoom-image" src="photo_2026-07-10_23-35-18.jpg" alt="Фото 1">
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <span class="card-status">Пройдено</span>
+                    <div class="card-info">
+                        <div class="stage-number">Месяц 2</div>
+                        <h3 class="stage-title">Первые шаги и сближение</h3>
+                        <p class="stage-description">Время, когда мы узнавали друг друга всё лучше. Романтические совместные прогулки, и первые общие шутки, понятные только нам двоим.</p>
+                    </div>
+                    <div class="zoom-window">
+                        <div class="zoom-hint">[ Прокрути назад для отдаления ]</div>
+                        <img src="stitch-love.png" class="stitch-corner" alt="">
+                        <img class="zoom-image" src="photo_2026-07-10_23-39-45.jpg" alt="Фото 2">
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <span class="card-status">Пройдено</span>
+                    <div class="card-info">
+                        <div class="stage-number">Месяц 3</div>
+                        <h3 class="stage-title">Общие моменты и уют</h3>
+                        <p class="stage-description">Каждый день приносил что-то новое. Мы делились мыслями, строили небольшие планы и согревали друг друга теплом, даже когда на улице было прохладно.</p>
+                    </div>
+                    <div class="zoom-window">
+                        <div class="zoom-hint">[ Прокрути назад для отдаления ]</div>
+                        <img src="stitch-love.png" class="stitch-corner" alt="">
+                        <img class="zoom-image" src="photo_2026-07-11_00-09-22.jpg" alt="Фото 3">
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <span class="card-status">Пройдено</span>
+                    <div class="card-info">
+                        <div class="stage-number">Месяц 4</div>
+                        <h3 class="stage-title">Поддержка и забота</h3>
+                        <p class="stage-description">Настоящие чувства проявляются в повседневных мелочах. Твоё внимание, добрые слова в нужный момент и искренняя забота помогали справляться с любыми трудностями.</p>
+                    </div>
+                    <div class="zoom-window">
+                        <div class="zoom-hint">[ Прокрути назад для отдаления ]</div>
+                        <img src="stitch-love.png" class="stitch-corner" alt="">
+                        <img class="zoom-image" src="photo_2026-07-11_00-10-47.jpg" alt="Фото 4">
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <span class="card-status">Пройдено</span>
+                    <div class="card-info">
+                        <div class="stage-number">Месяц 5</div>
+                        <h3 class="stage-title">Крепкая связь</h3>
+                        <p class="stage-description">Мы стали понимать друг друга без лишних слов. Это время доверия, самых искренних разговоров по душам и абсолютной уверенности в том, что мы — отличная команда.</p>
+                    </div>
+                    <div class="zoom-window">
+                        <div class="zoom-hint">[ Прокрути назад для отдаления ]</div>
+                        <img src="stitch-love.png" class="stitch-corner" alt="">
+                        <img class="zoom-image" src="photo_2026-07-11_00-13-50.jpg" alt="Фото 5">
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <span class="card-status">Пройдено</span>
+                    <div class="card-info">
+                        <div class="stage-number">Месяц 6</div>
+                        <h3 class="stage-title"> И наконец полгода искренней любви❤️</h3>
+                        <p class="stage-description">И вот мы празднуем наши первые 6 месяцев. Я невероятно счастлив, что рядом со мной находится такой прекрасный, добрый и понимающий человек, как ты.</p>
+                    </div>
+                    <div class="zoom-window">
+                        <div class="zoom-hint">[ Прокрути назад для отдаления ]</div>
+                        <img src="stitch-love.png" class="stitch-corner" alt="">
+                        <img class="zoom-image" src="photo_2026-07-11_00-15-04.jpg" alt="Фото 6">
+                    </div>
+                </div>
+
+            </div>
+
+            <section class="final-block">
+                <h2>Любимая, впереди счастливое будущее... ❤️</h2>
+                <p>С полугодом отношений, моя любимая! Наша совместная история продолжается, и я уверен, что впереди нас ждет еще очень много светлых, радостных дней. Люблю тебя!💘💘
+                </p>
+                <a href="gallery.html" class="gallery-btn">Открыть всю галерею →</a>
+            </section>
+
+        </div>
+
+        <footer>
+            <p>© 2026 Наша история. Создано с любовью.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- LOGIC FOR INTRO SCREEN ---
+        const introScreen = document.getElementById('intro-screen');
+        const introContainer = document.getElementById('intro-container');
+        const mainContent = document.getElementById('main-content');
+        
+        let introScale = 1;
+        let introActive = true;
+
+        introScreen.addEventListener('wheel', (e) => {
+            if (!introActive) return;
+            e.preventDefault();
+
+            if (e.deltaY > 0) { // Scroll back
+                introScale -= 0.08;
+                if (introScale <= 0.4) {
+                    introActive = false;
+                    introScreen.style.opacity = '0';
+                    introScreen.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        introScreen.style.display = 'none';
+                        mainContent.style.opacity = '1';
+                        document.body.style.overflowY = 'auto';
+                    }, 400);
+                }
+            } else { // Scroll forward
+                if (introScale < 1) {
+                    introScale += 0.08;
+                    if (introScale > 1) introScale = 1;
+                }
+            }
+
+            introContainer.style.transform = `scale(${introScale})`;
+        }, { passive: false });
+
+        document.body.style.overflowY = 'hidden';
+
+
+        // --- LOGIC FOR IMAGE WINDOWS ---
+        const zoomWindows = document.querySelectorAll('.zoom-window');
+
+        zoomWindows.forEach(windowBlock => {
+            let scale = 3;
+            const img = windowBlock.querySelector('.zoom-image');
+            const hint = windowBlock.querySelector('.zoom-hint');
+
+            windowBlock.addEventListener('wheel', (e) => {
+                e.preventDefault();
+
+                if (e.deltaY > 0) {
+                    if (scale > 1) {
+                        scale -= 0.15;
+                        if (scale < 1) scale = 1;
+                    }
+                } else {
+                    if (scale < 3) {
+                        scale += 0.15;
+                    }
+                }
+
+                let opacity = (3 - scale) / 2;
+                img.style.opacity = opacity;
+
+                if (scale < 2.8) {
+                    hint.style.opacity = '0';
+                } else {
+                    hint.style.opacity = '1';
+                }
+
+                img.style.transform = `scale(${scale})`;
+            }, { passive: false });
+        });
+    </script>
+
+</body>
+</html>
